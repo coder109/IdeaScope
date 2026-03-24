@@ -1,10 +1,10 @@
-# IdeaScope（中文说明）
+# IdeaScope（中文说明）🔎💡
 
 [English README (主文档)](./README.md)
 
 IdeaScope 是一个基于 FastAPI 的论文检索与分析工具，支持 arXiv + DBLP 检索、分类、BibTeX 导入导出、关键词报告与 Idea 新颖性评估。
 
-## 功能概览
+## ✨ 功能概览
 
 - 按关键词与年份区间检索论文
 - 支持普通模式与近似全量抓取模式
@@ -17,14 +17,14 @@ IdeaScope 是一个基于 FastAPI 的论文检索与分析工具，支持 arXiv 
 - 生成关键词报告
 - 评估研究 Idea 新颖性
 
-## 环境要求
+## 📦 环境要求
 
 - 建议 Python 3.10+
 - 可访问 arXiv/DBLP
 - 可选：OpenAI 兼容接口（用于 AI 分类/报告/新颖性）
 - 可选：Zotero API 凭据（用于导入 Zotero）
 
-## 安装与配置
+## ⚙️ 安装与配置
 
 1. 安装依赖：
 
@@ -47,7 +47,7 @@ pip install -r requirements.txt
 - `ZOTERO_API_KEY`
 - `ZOTERO_COLLECTION_KEY`（可选）
 
-## 启动
+## 🚀 启动
 
 ```bash
 uvicorn app.main:app --reload
@@ -55,7 +55,7 @@ uvicorn app.main:app --reload
 
 打开 [http://127.0.0.1:8000](http://127.0.0.1:8000)。
 
-## 前端界面说明（逐项）
+## 🧭 前端界面说明（逐项）
 
 ### 右上角设置
 
@@ -154,7 +154,7 @@ uvicorn app.main:app --reload
   - 若存在历史分析结果，一并恢复报告与新颖性面板；
   - 将当前上下文切换到该 run。
 
-## `run_id` 在哪里找（重点）
+## 🆔 `run_id` 在哪里找（重点）
 
 可通过以下方式获取：
 
@@ -170,7 +170,7 @@ uvicorn app.main:app --reload
 
 若 `Load Run` 报 404，通常是 `run_id` 输入错误，或该 run 文件不存在于 `runs/`。
 
-## 常见流程
+## 📚 常见流程
 
 ### 流程 A：检索 -> 分类 -> 导出
 
@@ -190,7 +190,7 @@ uvicorn app.main:app --reload
 2. 填写 `Idea`（可选填写 `Report keywords`）。
 3. 点击 `Evaluate Idea Novelty`。
 
-## API 列表
+## 🔌 API 列表
 
 - `POST /api/search`
 - `POST /api/classify`
@@ -202,7 +202,7 @@ uvicorn app.main:app --reload
 - `POST /api/idea/evaluate`
 - `GET /api/runs/{run_id}`
 
-## 测试
+## ✅ 测试
 
 ```bash
 pytest

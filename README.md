@@ -1,10 +1,10 @@
-# IdeaScope
+# IdeaScope 🔎💡
 
 [中文 README](./README.zh-CN.md)
 
 IdeaScope is a FastAPI web app for searching papers from arXiv + DBLP, classifying them, exporting/importing BibTeX, generating keyword reports, and evaluating idea novelty.
 
-## What this project does
+## ✨ What this project does
 
 - Search papers by keyword and year range
 - Support normal mode and approximate full crawl mode
@@ -17,14 +17,14 @@ IdeaScope is a FastAPI web app for searching papers from arXiv + DBLP, classifyi
 - Generate a keyword report from current papers or a saved run
 - Evaluate novelty of a research idea against current papers or a saved run
 
-## Requirements
+## 📦 Requirements
 
 - Python 3.10+ recommended
 - Network access to arXiv/DBLP
 - Optional: OpenAI-compatible API for AI classification/reporting/novelty
 - Optional: Zotero API credentials for Zotero import
 
-## Setup
+## ⚙️ Setup
 
 1. Install dependencies:
 
@@ -47,7 +47,7 @@ pip install -r requirements.txt
 - `ZOTERO_API_KEY`
 - `ZOTERO_COLLECTION_KEY` (optional)
 
-## Run the app
+## 🚀 Run the app
 
 ```bash
 uvicorn app.main:app --reload
@@ -55,7 +55,7 @@ uvicorn app.main:app --reload
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-## UI Guide (every control and button)
+## 🧭 UI Guide (every control and button)
 
 ### Top-right controls
 
@@ -160,7 +160,7 @@ Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
   - Restores saved report/novelty panels if present.
   - Sets current context to the loaded run.
 
-## Where to find `run_id` (important)
+## 🆔 Where to find `run_id` (important)
 
 Use any of these methods:
 
@@ -176,7 +176,7 @@ Use any of these methods:
 
 If `Load Run` returns 404, usually the `run_id` does not exist under `runs/` or was typed incorrectly.
 
-## Typical workflows
+## 📚 Typical workflows
 
 ### Workflow A: search -> classify -> export
 
@@ -196,7 +196,7 @@ If `Load Run` returns 404, usually the `run_id` does not exist under `runs/` or 
 2. Fill `Idea` (+ optional `Report keywords`).
 3. Click `Evaluate Idea Novelty`.
 
-## API overview
+## 🔌 API overview
 
 - `POST /api/search`
 - `POST /api/classify`
@@ -208,7 +208,7 @@ If `Load Run` returns 404, usually the `run_id` does not exist under `runs/` or 
 - `POST /api/idea/evaluate`
 - `GET /api/runs/{run_id}`
 
-## Run tests
+## ✅ Run tests
 
 ```bash
 pytest
