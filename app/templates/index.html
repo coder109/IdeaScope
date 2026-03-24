@@ -261,6 +261,14 @@
           <input id="fetchAll" type="checkbox" />
           <span id="labelFetchAll">Approx full crawl mode</span>
         </label>
+        <label class="check-wrap" title="Filter out weakly related papers after fetch.">
+          <input id="strictRelevance" type="checkbox" checked />
+          <span id="labelStrictRelevance">Strict relevance filter</span>
+        </label>
+        <label class="check-wrap" title="Keep only papers with all keywords in title.">
+          <input id="titleOnlyMatch" type="checkbox" />
+          <span id="labelTitleOnly">Title-only match</span>
+        </label>
         <label class="check-wrap" title="Use LLM to generate free tags during classification.">
           <input id="useAiClassify" type="checkbox" checked />
           <span id="labelUseAi">Use AI for classify</span>

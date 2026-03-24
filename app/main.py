@@ -33,6 +33,8 @@ class SearchRequest(BaseModel):
     max_results_per_source: int = Field(default=30, ge=1, le=200)
     fetch_all: bool = False
     max_fetch_limit_per_source: int = Field(default=1000, ge=1, le=5000)
+    strict_relevance: bool = False
+    title_only_match: bool = False
 
 
 class BibTeXRequest(BaseModel):
@@ -109,6 +111,8 @@ async def api_search(payload: SearchRequest) -> dict:
             max_results_per_source=payload.max_results_per_source,
             fetch_all=payload.fetch_all,
             max_fetch_limit_per_source=payload.max_fetch_limit_per_source,
+            strict_relevance=payload.strict_relevance,
+            title_only_match=payload.title_only_match,
         )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
@@ -119,6 +123,8 @@ async def api_search(payload: SearchRequest) -> dict:
         "max_results_per_source": payload.max_results_per_source,
         "fetch_all": payload.fetch_all,
         "max_fetch_limit_per_source": payload.max_fetch_limit_per_source,
+        "strict_relevance": payload.strict_relevance,
+        "title_only_match": payload.title_only_match,
     }
     run_payload = create_search_run(query=query, papers=papers)
     return {

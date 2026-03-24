@@ -16,6 +16,8 @@ const I18N = {
     labelMaxFetchLimit: "Approx full crawl cap",
     hintMaxFetchLimit: "Per source upper limit in crawl mode.",
     labelFetchAll: "Approx full crawl mode",
+    labelStrictRelevance: "Strict relevance filter",
+    labelTitleOnly: "Title-only match",
     labelUseAi: "Use AI for classify",
     btnSearch: "Search",
     btnClassify: "Classify",
@@ -116,6 +118,8 @@ const I18N = {
     labelMaxFetchLimit: "近似全量抓取上限",
     hintMaxFetchLimit: "全量模式下每个数据源的上限。",
     labelFetchAll: "近似全量抓取模式",
+    labelStrictRelevance: "严格相关性过滤",
+    labelTitleOnly: "仅标题匹配",
     labelUseAi: "分类使用 AI",
     btnSearch: "检索",
     btnClassify: "分类",
@@ -371,6 +375,8 @@ function applyUiLabels() {
   byId("labelMaxFetchLimit").textContent = t("labelMaxFetchLimit");
   byId("hintMaxFetchLimit").textContent = t("hintMaxFetchLimit");
   byId("labelFetchAll").textContent = t("labelFetchAll");
+  byId("labelStrictRelevance").textContent = t("labelStrictRelevance");
+  byId("labelTitleOnly").textContent = t("labelTitleOnly");
   byId("labelUseAi").textContent = t("labelUseAi");
   byId("searchBtn").textContent = t("btnSearch");
   byId("classifyBtn").textContent = t("btnClassify");
@@ -425,6 +431,8 @@ async function search() {
     max_results_per_source: Number(byId("maxResults").value),
     fetch_all: byId("fetchAll").checked,
     max_fetch_limit_per_source: Number(byId("maxFetchLimit").value),
+    strict_relevance: byId("strictRelevance").checked,
+    title_only_match: byId("titleOnlyMatch").checked,
   };
   if (!payload.keyword) {
     byId("status").textContent = t("emptyKeyword");
@@ -776,6 +784,8 @@ function toggleControls(disabled) {
   byId("uiLanguage").disabled = disabled;
   byId("themeMode").disabled = disabled;
   byId("fetchAll").disabled = disabled;
+  byId("strictRelevance").disabled = disabled;
+  byId("titleOnlyMatch").disabled = disabled;
   byId("useAiClassify").disabled = disabled;
   byId("bibFileInput").disabled = disabled;
   const fetchAll = byId("fetchAll").checked;

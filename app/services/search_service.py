@@ -22,6 +22,22 @@ def _in_year_range(paper: Paper, start_year: int, end_year: int) -> bool:
     return False
 
 
+def _keyword_tokens(keyword: str) -> list[str]:
+    return [x for x in re.split(r"\s+", keyword.lower().strip()) if x]
+
+
+def _is_relevant(paper: Paper, keyword: str, title_only: bool = False) -> bool:
+    tokens = _keyword_tokens(keyword)
+    if not tokens:
+        return True
+    title = (paper.title or "").lower()
+    if title_only:
+        return all(tok in title for tok in tokens)
+    abstract = (paper.abstract or "").lower()
+    text = f"{title} {abstract}"
+    return all(tok in text for tok in tokens)
+
+
 def _dedupe(papers: list[Paper]) -> list[Paper]:
     seen_doi: set[str] = set()
     seen_title: set[str] = set()
@@ -71,6 +87,8 @@ async def search_papers(
     max_results_per_source: int = 30,
     fetch_all: bool = False,
     max_fetch_limit_per_source: int = 1000,
+    strict_relevance: bool = False,
+    title_only_match: bool = False,
 ) -> list[Paper]:
     if start_year > end_year:
         raise ValueError("start_year must be <= end_year")
@@ -97,6 +115,12 @@ async def search_papers(
 
     combined = arxiv_papers + dblp_papers
     filtered = [paper for paper in combined if _in_year_range(paper, start_year, end_year)]
+    if strict_relevance:
+        filtered = [
+            paper
+            for paper in filtered
+            if _is_relevant(paper, keyword=keyword, title_only=title_only_match)
+        ]
     deduped = _dedupe(filtered)
     classified = await _classify_all(deduped)
     classified.sort(
