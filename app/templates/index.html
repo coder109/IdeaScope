@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IdeaScope</title>
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --bg-accent: #eef4ff;
+      --panel: #ffffff;
+      --text: #1f2937;
+      --muted: #64748b;
+      --line: #dbe2ea;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent: #7c3aed;
+      --accent-hover: #6d28d9;
+      --success: #0f766e;
+      --success-hover: #0d645d;
+      --warning: #b45309;
+      --danger: #b91c1c;
+      --info: #0369a1;
+    }
+    body[data-theme="dark"] {
+      --bg: #0b1220;
+      --bg-accent: #0b1220;
+      --panel: #111827;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --line: #273244;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #8b5cf6;
+      --accent-hover: #7c3aed;
+      --success: #059669;
+      --success-hover: #047857;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --info: #0284c7;
+    }
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at top, var(--bg-accent), var(--bg) 35%);
+      color: var(--text);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px 24px;
+    }
+    .top-right-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .top-right-controls .field {
+      min-width: 170px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+    h1 { margin: 0 0 8px; }
+    .subtitle { color: var(--muted); margin: 0 0 16px; }
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 13px; color: #334155; font-weight: 600; }
+    .hint { font-size: 12px; color: var(--muted); min-height: 16px; }
+    input, select {
+      padding: 10px;
+      border: 1px solid #cfd8e3;
+      border-radius: 10px;
+      outline: none;
+      background: #fff;
+      color: inherit;
+    }
+    input:focus, select:focus { border-color: #8ab4ff; box-shadow: 0 0 0 3px #dbeafe; }
+    body[data-theme="dark"] input,
+    body[data-theme="dark"] select {
+      background: #0f172a;
+      border-color: #334155;
+      color: #e2e8f0;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+    }
+    button {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: var(--primary-hover); }
+    #exportBtn { background: #0f766e; }
+    #exportBtn:hover { background: #0d645d; }
+    #exportMdBtn { background: #0b7285; }
+    #exportMdBtn:hover { background: #095c6b; }
+    #reportBtn { background: var(--accent); }
+    #reportBtn:hover { background: var(--accent-hover); }
+    #ideaBtn { background: var(--info); }
+    #ideaBtn:hover { background: #075985; }
+    #loadRunBtn { background: #334155; }
+    #loadRunBtn:hover { background: #1e293b; }
+    .check-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #334155;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    #status { margin: 12px 0 8px; font-weight: 600; color: #1d4ed8; }
+    #results { margin-top: 16px; }
+    .paper {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: var(--panel);
+    }
+    .paper h3 { margin-top: 0; margin-bottom: 8px; }
+    .paper h3 a { color: #1e40af; text-decoration: none; }
+    .paper h3 a:hover { text-decoration: underline; }
+    .meta { color: #475569; font-size: 14px; margin-bottom: 8px; }
+    .tags { font-size: 13px; color: #334155; margin-top: 8px; }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      background: var(--panel);
+      margin-top: 12px;
+    }
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #dbe2ea;
+      background: #f8fafc;
+    }
+    .chip.good { background: #dcfce7; border-color: #86efac; color: #166534; }
+    .chip.mid { background: #fef3c7; border-color: #fcd34d; color: #92400e; }
+    .chip.low { background: #fee2e2; border-color: #fca5a5; color: #991b1b; }
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+    .bar > span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+    }
+    .muted { color: var(--muted); font-size: 13px; }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-right-controls">
+      <div class="field">
+        <label for="uiLanguage" id="labelUiLang">UI language</label>
+        <select id="uiLanguage">
+          <option value="system" selected id="optUiLangSystem">System</option>
+          <option value="zh" id="optUiLangZh">中文</option>
+          <option value="en" id="optUiLangEn">English</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="themeMode" id="labelTheme">Theme mode</label>
+        <select id="themeMode">
+          <option value="system" selected id="optThemeSystem">System</option>
+          <option value="light" id="optThemeLight">Light</option>
+          <option value="dark" id="optThemeDark">Dark</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <h1 id="titleMain">IdeaScope</h1>
+      <p class="subtitle" id="subtitleMain">Search arXiv + DBLP by keyword and year range, classify papers, and export BibTeX.</p>
+
+      <div class="grid">
+        <div class="field">
+          <label for="keyword" id="labelKeyword">Keyword</label>
+          <input id="keyword" placeholder="e.g. diffusion model, retrieval augmented generation" />
+          <div class="hint" id="hintKeyword">Supports multi-word queries; use specific terms for better relevance.</div>
+        </div>
+        <div class="field">
+          <label for="startYear" id="labelStartYear">Start year</label>
+          <input id="startYear" type="number" value="2023" />
+          <div class="hint" id="hintStartYear">Earliest publication year.</div>
+        </div>
+        <div class="field">
+          <label for="endYear" id="labelEndYear">End year</label>
+          <input id="endYear" type="number" value="2026" />
+          <div class="hint" id="hintEndYear">Latest publication year.</div>
+        </div>
+        <div class="field">
+          <label for="maxResults" id="labelMaxResults">Max results/source</label>
+          <input id="maxResults" type="number" value="30" />
+          <div class="hint" id="hintMaxResults">Used in normal mode.</div>
+        </div>
+        <div class="field">
+          <label for="maxFetchLimit" id="labelMaxFetchLimit">Approx full crawl cap</label>
+          <input id="maxFetchLimit" type="number" value="1000" />
+          <div class="hint" id="hintMaxFetchLimit">Per source upper limit in crawl mode.</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <label class="check-wrap" title="Enable paginated fetch until per-source cap is reached.">
+          <input id="fetchAll" type="checkbox" />
+          <span id="labelFetchAll">Approx full crawl mode</span>
+        </label>
+        <label class="check-wrap" title="Use LLM to generate free tags during classification.">
+          <input id="useAiClassify" type="checkbox" checked />
+          <span id="labelUseAi">Use AI for classify</span>
+        </label>
+        <button id="searchBtn">Search</button>
+        <button id="classifyBtn">Classify</button>
+        <button id="zoteroBtn">Import Zotero</button>
+        <button id="importBibBtn">Import BibTeX</button>
+        <button id="exportBtn">Export BibTeX</button>
+        <button id="exportMdBtn">Export Markdown</button>
+        <button id="reportBtn">Generate Report</button>
+        <button id="ideaBtn">Evaluate Idea Novelty</button>
+        <button id="loadRunBtn">Load Run</button>
+        <input id="bibFileInput" type="file" accept=".bib,.bibtex,.txt" style="display:none;" />
+      </div>
+      <div class="grid" style="margin-top: 12px;">
+        <div class="field">
+          <label for="reportKeywords" id="labelReportKeywords">Report keywords (comma separated)</label>
+          <input id="reportKeywords" placeholder="e.g. rag, retrieval, agent" />
+          <div class="hint" id="hintReportKeywords">Used for keyword coverage and trend summary.</div>
+        </div>
+        <div class="field">
+          <label for="ideaInput" id="labelIdea">Idea</label>
+          <input id="ideaInput" placeholder="Describe your research idea..." />
+          <div class="hint" id="hintIdea">Used for novelty scoring and risk assessment.</div>
+        </div>
+        <div class="field">
+          <label for="runIdInput" id="labelRunId">Run ID</label>
+          <input id="runIdInput" placeholder="Paste run_id to reload" />
+          <div class="hint" id="hintRunId">A run_id is generated after search.</div>
+        </div>
+        <div class="field">
+          <label for="analysisTopN" id="labelTopN">Analysis top N</label>
+          <input id="analysisTopN" type="number" value="120" />
+          <div class="hint" id="hintTopN">Upper bound of papers used for analysis.</div>
+        </div>
+        <div class="field">
+          <label for="reportLanguage" id="labelReportLang">Report language</label>
+          <select id="reportLanguage">
+            <option value="zh" id="optReportLangZh">中文</option>
+            <option value="en" selected id="optReportLangEn">English</option>
+          </select>
+          <div class="hint" id="hintReportLang">Controls report and novelty output language.</div>
+        </div>
+      </div>
+
+      <p id="status"></p>
+      <p id="runStatus" class="muted"></p>
+    </div>
+
+    <div id="analysisPanels">
+      <div id="reportPanel" class="panel" style="display:none;"></div>
+      <div id="ideaPanel" class="panel" style="display:none;"></div>
+    </div>
+
+    <div id="results"></div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
