@@ -93,12 +93,21 @@
       border-color: #334155;
       color: #e2e8f0;
     }
-    .actions {
+    .actions-settings {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 10px;
       margin-top: 2px;
+    }
+    .actions-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
     }
     button {
       padding: 10px 14px;
@@ -247,7 +256,7 @@
         </div>
       </div>
 
-      <div class="actions">
+      <div class="actions-settings">
         <label class="check-wrap" title="Enable paginated fetch until per-source cap is reached.">
           <input id="fetchAll" type="checkbox" />
           <span id="labelFetchAll">Approx full crawl mode</span>
@@ -256,17 +265,8 @@
           <input id="useAiClassify" type="checkbox" checked />
           <span id="labelUseAi">Use AI for classify</span>
         </label>
-        <button id="searchBtn">Search</button>
-        <button id="classifyBtn">Classify</button>
-        <button id="zoteroBtn">Import Zotero</button>
-        <button id="importBibBtn">Import BibTeX</button>
-        <button id="exportBtn">Export BibTeX</button>
-        <button id="exportMdBtn">Export Markdown</button>
-        <button id="reportBtn">Generate Report</button>
-        <button id="ideaBtn">Evaluate Idea Novelty</button>
-        <button id="loadRunBtn">Load Run</button>
-        <input id="bibFileInput" type="file" accept=".bib,.bibtex,.txt" style="display:none;" />
       </div>
+
       <div class="grid" style="margin-top: 12px;">
         <div class="field">
           <label for="reportKeywords" id="labelReportKeywords">Report keywords (comma separated)</label>
@@ -296,6 +296,19 @@
           </select>
           <div class="hint" id="hintReportLang">Controls report and novelty output language.</div>
         </div>
+      </div>
+
+      <div class="actions-buttons">
+        <button id="searchBtn">Search</button>
+        <button id="classifyBtn">Classify</button>
+        <button id="zoteroBtn">Import Zotero</button>
+        <button id="importBibBtn">Import BibTeX</button>
+        <button id="exportBtn">Export BibTeX</button>
+        <button id="exportMdBtn">Export Markdown</button>
+        <button id="reportBtn">Generate Report</button>
+        <button id="ideaBtn">Evaluate Idea Novelty</button>
+        <button id="loadRunBtn">Load Run</button>
+        <input id="bibFileInput" type="file" accept=".bib,.bibtex,.txt" style="display:none;" />
       </div>
 
       <p id="status"></p>
