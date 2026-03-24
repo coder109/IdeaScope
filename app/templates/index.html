@@ -78,7 +78,7 @@
     .field { display: flex; flex-direction: column; gap: 6px; }
     label { font-size: 13px; color: #334155; font-weight: 600; }
     .hint { font-size: 12px; color: var(--muted); min-height: 16px; }
-    input, select {
+    input, select, textarea {
       padding: 10px;
       border: 1px solid #cfd8e3;
       border-radius: 10px;
@@ -86,9 +86,15 @@
       background: #fff;
       color: inherit;
     }
-    input:focus, select:focus { border-color: #8ab4ff; box-shadow: 0 0 0 3px #dbeafe; }
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+      line-height: 1.4;
+    }
+    input:focus, select:focus, textarea:focus { border-color: #8ab4ff; box-shadow: 0 0 0 3px #dbeafe; }
     body[data-theme="dark"] input,
-    body[data-theme="dark"] select {
+    body[data-theme="dark"] select,
+    body[data-theme="dark"] textarea {
       background: #0f172a;
       border-color: #334155;
       color: #e2e8f0;
@@ -283,7 +289,7 @@
         </div>
         <div class="field">
           <label for="ideaInput" id="labelIdea">Idea</label>
-          <input id="ideaInput" placeholder="Describe your research idea..." />
+          <textarea id="ideaInput" placeholder="Describe your research idea..."></textarea>
           <div class="hint" id="hintIdea">Used for novelty scoring and risk assessment.</div>
         </div>
         <div class="field">
